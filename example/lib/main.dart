@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
-          child: Center(child: Column(children: [Text('minimum_build: ${RemoteConfig.values.minimumBuild}'), Text('latest_build: ${RemoteConfig.values.latestBuild}')])),
+          child: Center(child: Column(children: [Text('minimum_build: ${RemoteConfig.remoteValues.minimumBuild}'), Text('latest_build: ${RemoteConfig.remoteValues.latestBuild}')])),
         ),
       ),
     );

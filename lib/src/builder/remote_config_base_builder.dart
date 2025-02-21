@@ -20,11 +20,11 @@ class RemoteConfigBaseBuilder {
 
   static final String _remoteConfigBaseBody = '''abstract class RemoteConfigBase {
   @protected
-  late RemoteConfigData _remoteConfigValues;
+  late RemoteConfigData _values;
 
-  RemoteConfigData get remoteConfigValues {
+  RemoteConfigData get values {
     try {
-      final returnValues = _remoteConfigValues;
+      final returnValues = _values;
       return returnValues;
     } catch (e) {
       throw Exception('Remote config not initialized, call init() first');
@@ -59,7 +59,7 @@ class RemoteConfigBaseBuilder {
 
   Future<void> init() async {
     await refreshRemoteConfig();
-    _remoteConfigValues = RemoteConfigData.fromRemoteConfig(this);
+    _values = RemoteConfigData.fromRemoteConfig(this);
   }
 }''';
 }

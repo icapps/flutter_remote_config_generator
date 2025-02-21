@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 class RemoteConfig extends RemoteConfigBase {
   static final RemoteConfig instance = RemoteConfig._();
 
-  static RemoteConfigData get values => instance.remoteConfigValues;
+  static RemoteConfigData get remoteValues => instance.values;
 
   Map<String, dynamic> _values = {};
 
