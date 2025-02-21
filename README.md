@@ -1,39 +1,50 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A generator that helps you generate code for your remote config, currently only firebase is supported.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Generates the nescessary code for accessing your remote config
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+To get started you need 2 things, first is a firebase service account key of a service account that has access to the remote config. Second is a config.yaml file stored in the remote_config_generator folder in the root of your project.
 
-## Usage
+The file should look something like this
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+credentials_path: path to credentials (ex. remote_config_generator/credentials.json)
+project_id: project id of your firebase project
 ```
 
-## Additional information
+After that just run the tool by running this command:
+```bash
+flutter packages run remote_config_generator
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+This will generate 3 files. remote_config_base.dart, remote_config_data.dart and remote_config_keys.dart. To then use these generated files create a class which extends the remoteConfigBase like this:
+
+```dart
+class RemoteConfig extends RemoteConfigBase {
+  RemoteConfig._();
+
+  @override
+  @protected
+  Future<void> refreshRemoteConfig() async {
+    // Refresh remote config here
+  }
+
+  @override
+  String? getOptionalValue(String key) {
+    // Get the value out of your remote config (doesn't have to be from firebase)
+  }
+}
+```
+
+Now all you have to do is initialize the remote config and call the values:
+
+```dart
+final remoteConfig = RemoteConfig();
+remoteConfig.init();
+remoteConfig.values.{valueName}
+```
+
+It is advised to make the RemoteConfig a singleton so you always access the same values.

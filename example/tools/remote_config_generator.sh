@@ -7,4 +7,4 @@ then
   cd ..
 fi
 
-fvm flutter packages run remote_config_generator
+flutter packages run remote_config_generator
