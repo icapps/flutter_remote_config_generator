@@ -1,7 +1,7 @@
 name: remote_config_generator
 description: "a generator for remote config"
 version: 0.0.1
-homepage:
+repository: https://github.com/icapps/flutter_remote_config_generator
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
