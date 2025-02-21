@@ -46,13 +46,15 @@ class RemoteConfigParameter {
     ValueType.number => 'double',
     ValueType.string => 'String',
     ValueType.boolean => 'bool',
+    ValueType.json => 'Map<String, dynamic>',
   };
 }
 
 enum ValueType {
   number('NUMBER'),
   string('STRING'),
-  boolean('BOOLEAN');
+  boolean('BOOLEAN'),
+  json('JSON');
 
   final String jsonKey;
   const ValueType(this.jsonKey);

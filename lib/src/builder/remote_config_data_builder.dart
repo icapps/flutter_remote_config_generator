@@ -7,8 +7,9 @@ import 'package:remote_config_generator/src/util/extensions/spec_extension.dart'
 class RemoteConfigDataBuilder {
   static String build({required  List<RemoteConfigParameter> parameters, required PubSpecConfig pubspec}) {
     final className = 'RemoteConfigData';
+    final filteredParameters = parameters.where((param) => param.valueType != ValueType.json).toList();
     final fields =
-        parameters.map((param) {
+        filteredParameters.map((param) {
           return Field(
             (field) =>
                 field
@@ -20,7 +21,7 @@ class RemoteConfigDataBuilder {
 
     final constructor = Constructor((c) {
       c.optionalParameters.addAll(
-        parameters.map((param) {
+        filteredParameters.map((param) {
           return Parameter(
             (p) =>
                 p
@@ -48,7 +49,7 @@ class RemoteConfigDataBuilder {
         )
         ..body = Code('''
         return $className(
-          ${parameters.map((param) => "${CaseUtil(param.key).camelCase}: ${_buildParameterValue(param)}").join(",\n          ")}
+          ${filteredParameters.map((param) => "${CaseUtil(param.key).camelCase}: ${_buildParameterValue(param)}").join(",\n          ")}
         );
       ''');
     });
@@ -79,6 +80,9 @@ class RemoteConfigDataBuilder {
         return 'remoteConfigBase.getOptionalString(\'${parameter.key}\') ?? ${hasDefaultValue ? defaultValue : ''}';
       case ValueType.boolean:
         return 'remoteConfigBase.getOptionalBool(\'${parameter.key}\') ?? ${hasDefaultValue ? defaultValue : false}';
+      case ValueType.json:
+      // json not supported currently
+        throw '';
     }
   }
 }
